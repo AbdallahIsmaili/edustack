@@ -30,6 +30,8 @@
     <body>
 
         @section('sidebar')
+
+
             <!-- navigation -->
             <header class="is-sticky-top bg-white border-bottom border-default">
                 <div class="container">
@@ -57,17 +59,24 @@
                             <a class="navbar-link is-arrowless" href="contact.html">Contact</a>
                         </li>
 
-                        {{-- <li class="navbar-item has-dropdown is-hoverable has-active">
-                            <a class="navbar-link">Pages <small class="ti-angle-down ml-1"></small></a>
+                        <li class="navbar-item has-dropdown is-hoverable has-active">
+                            <a class="navbar-link">Account <small class="ti-angle-down ml-1"></small></a>
                             <div class="navbar-dropdown">
-                            <a class="navbar-item" href="author.html">Author</a>
-                            <a class="navbar-item" href="post-details-1.html">Post Details 1</a>
-                            <a class="navbar-item" href="post-details-2.html">Post Details 2</a>
-                            <a class="navbar-item" href="post-elements.html">Post Elements</a>
-                            <a class="navbar-item" href="privacy-policy.html">Privacy Policy</a>
-                            <a class="navbar-item" href="terms-conditions.html">Terms Conditions</a>
+                                <a class="navbar-item" href="author.html">My profile</a>
+                                <a class="navbar-item" href="post-details-1.html">My Questions</a>
+
+                                <a class="navbar-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                    {{ __('Log out') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+
                             </div>
-                        </li> --}}
+                        </li>
 
                         <li class="navbar-item">
                             <select class="m-2 is-borderless" id="select-language">
@@ -107,7 +116,7 @@
                <div class="columns is-multiline is-justify-content-space-between">
                   <div class="column is-3-desktop">
                      <a class="mb-5 is-block" href="index.html">
-                        <img class="" width="150px" src="images/logo.png" alt="LogBook">
+                        <img class="" width="150px" src="{{ asset('assets/images/logo.png') }}" alt="LogBook">
                      </a>
                      <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
                   </div>
