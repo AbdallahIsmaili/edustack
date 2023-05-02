@@ -48,7 +48,7 @@
 
                     <ul class="navbar-end navbar-menu" id="navigation">
                         <li class="navbar-item has-dropdown is-hoverable has-active">
-                            <a class="navbar-link">Home</a>
+                            <a class="navbar-link" href="{{ route('home') }}" >Home</a>
                         </li>
 
                         <li class="navbar-item">
@@ -63,8 +63,7 @@
                             <li class="navbar-item has-dropdown is-hoverable has-active">
                                 <a class="navbar-link">Account <small class="ti-angle-down ml-1"></small></a>
                                 <div class="navbar-dropdown">
-                                    <a class="navbar-item" href="author.html">My profile</a>
-                                    <a class="navbar-item" href="post-details-1.html">My Questions</a>
+                                    <a class="navbar-item" href="{{ route('profile.index') }}">My profile</a>
                                     <a class="navbar-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
@@ -135,7 +134,7 @@
             </div>
         </section>
 
-        @if(Request::is('index'))
+        @if(Request::is('/'))
         <footer class="section-sm pb-0 border-top border-default">
             <div class="container">
                <div class="columns is-multiline is-justify-content-space-between">

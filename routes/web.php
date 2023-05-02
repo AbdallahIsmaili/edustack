@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SubjectController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,5 +17,22 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Auth::routes();
 
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('dashboard', function () {
+        return view('admin.dashboard');
+    })->name('dashboard');
 
-Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+    Route::resource('dashboard/subjects', SubjectController::class)->names([
+        'index' => 'subjects.index'
+    ]);
+
+    Route::put('/subjects/{id}/disable', [SubjectController::class, 'disable'])->name('subjects.disable');
+
+    Route::put('/subjects/{id}/enable', [SubjectController::class, 'enable'])->name('subjects.enable');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [App\Http\Controllers\UserController::class, 'index'])->name('profile.index');
+
+    Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+});

@@ -10,9 +10,11 @@ class SubjectController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        //
+        $subjects = Subject::all();
+        return view('admin.pages.analytics.subjects', compact('subjects'));
     }
 
     /**
@@ -20,7 +22,7 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.analytics.add-subject');
     }
 
     /**
@@ -28,8 +30,16 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $subject = Subject::create([
+            'name' => $request->subject_name,
+            'description' => $request->subject_desc
+        ]);
+
+        return redirect()
+            ->route('subjects.create')
+            ->with('success', 'Cool the new subject ' . $subject->name . ' created successfully!');
     }
+
 
     /**
      * Display the specified resource.
@@ -62,4 +72,23 @@ class SubjectController extends Controller
     {
         //
     }
+
+    public function disable($id)
+    {
+        $subject = Subject::find($id);
+        $subject->is_active = false;
+        $subject->save();
+
+        return redirect()->back();
+    }
+
+    public function enable($id)
+    {
+        $subject = Subject::find($id);
+        $subject->is_active = true;
+        $subject->save();
+
+        return redirect()->back();
+    }
+
 }
