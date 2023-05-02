@@ -59,24 +59,48 @@
                             <a class="navbar-link is-arrowless" href="contact.html">Contact</a>
                         </li>
 
-                        <li class="navbar-item has-dropdown is-hoverable has-active">
-                            <a class="navbar-link">Account <small class="ti-angle-down ml-1"></small></a>
-                            <div class="navbar-dropdown">
-                                <a class="navbar-item" href="author.html">My profile</a>
-                                <a class="navbar-item" href="post-details-1.html">My Questions</a>
+                        @if(auth()->check())
+                            <li class="navbar-item has-dropdown is-hoverable has-active">
+                                <a class="navbar-link">Account <small class="ti-angle-down ml-1"></small></a>
+                                <div class="navbar-dropdown">
+                                    <a class="navbar-item" href="author.html">My profile</a>
+                                    <a class="navbar-item" href="post-details-1.html">My Questions</a>
+                                    <a class="navbar-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                        {{ __('Log out') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
 
-                                <a class="navbar-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                    {{ __('Log out') }}
-                                </a>
+                        @elseif(Request::is('login'))
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
+                            <li class="navbar-item">
+                                <a class="navbar-link is-arrowless" href="contact.html">Questions</a>
+                            </li>
 
-                            </div>
-                        </li>
+                        @elseif(Request::is('register'))
+
+                            <li class="navbar-item">
+                                <a class="navbar-link is-arrowless" href="contact.html">Questions</a>
+                            </li>
+
+                        @else
+
+                            <li class="navbar-item">
+                                <a class="navbar-link is-arrowless" href="contact.html">Questions</a>
+                            </li>
+
+                            <li class="navbar-item">
+                                    <a class="navbar-link is-arrowless" href="{{ route('login') }}">Login</a>
+                                    <a class="navbar-link is-arrowless" href="{{ route('register') }}">Register</a>
+                            </li>
+
+                        @endif
+
 
                         <li class="navbar-item">
                             <select class="m-2 is-borderless" id="select-language">
@@ -111,6 +135,7 @@
             </div>
         </section>
 
+        @if(Request::is('index'))
         <footer class="section-sm pb-0 border-top border-default">
             <div class="container">
                <div class="columns is-multiline is-justify-content-space-between">
@@ -160,6 +185,8 @@
                </div>
             </div>
          </footer>
+
+         @endif
 
 
          <!-- JS Plugins -->
