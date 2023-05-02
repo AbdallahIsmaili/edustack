@@ -52,10 +52,12 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Subject $subject)
+    public function edit($id)
     {
-        //
+        $subject = Subject::findOrFail($id);
+        return view('admin.pages.analytics.edit-subject', compact('subject'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -68,10 +70,17 @@ class SubjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subject $subject)
+    public function destroy($id)
     {
-        //
+        $subject = Subject::findOrFail($id);
+
+        // Delete the subject from the database
+        $subject->delete();
+
+        // Redirect to the index page with a success message
+        return redirect()->route('subjects.index')->with('success', 'Done, the subject ' . $subject->name . ' deleted successfully!');
     }
+
 
     public function disable($id)
     {

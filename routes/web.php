@@ -29,6 +29,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/subjects/{id}/disable', [SubjectController::class, 'disable'])->name('subjects.disable');
 
     Route::put('/subjects/{id}/enable', [SubjectController::class, 'enable'])->name('subjects.enable');
+
+    Route::delete('/subjects/{id}/destroy', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+
+    Route::get('/subjects/{id}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
+
 });
 
 Route::middleware(['auth'])->group(function () {

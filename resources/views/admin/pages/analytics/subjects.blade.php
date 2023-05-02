@@ -4,6 +4,24 @@
 
 
 @section('content')
+
+@if (session('success'))
+        <div id="success-toast" class="bs-toast toast fade show bg-success position-absolute end-0"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true">
+            <div class="toast-header">
+                <i class="bx bx-bell me-2"></i>
+                <div class="me-auto fw-semibold">Cool</div>
+                <small>Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                {{ session('success') }}
+            </div>
+        </div>
+    @endif
+
 <!-- Content -->
 
 <div class="container-xxl flex-grow-1 container-p-y">
@@ -148,12 +166,17 @@
                               <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"
+                              <a class="dropdown-item" href="{{ route('subjects.edit', $subject->id) }}"
                                 ><i class="bx bx-edit-alt me-1"></i> Edit</a
                               >
-                              <a class="dropdown-item" href="javascript:void(0);"
-                                ><i class="bx bx-trash me-1"></i> Delete</a
-                              >
+
+                                <form method="POST" action="{{ route('subjects.destroy', $subject->id) }}">
+                                @csrf
+                                @method('DELETE')
+                                    <button type="submit" class="dropdown-item">
+                                    <i class='bx bx-trash me-1' ></i> Delete
+                                    </button>
+                                </form>
 
                               @if ($subject->is_active == true)
 
@@ -378,4 +401,15 @@
   </div>
   <!-- / Content -->
 
+  <script>
+    // Get the toast message element
+    var successToast = document.getElementById('success-toast');
+
+    // If the toast message element exists, set a timeout to remove it after 5 seconds
+    if (successToast) {
+        setTimeout(function() {
+            successToast.remove();
+        }, 5000);
+    }
+</script>
   @endsection
