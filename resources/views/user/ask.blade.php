@@ -5,6 +5,18 @@
 
 @section('content')
 
+    @if (session('success'))
+        <div class=" ">
+            <div class="content">
+                <div class="notices tip">
+                    <p>{{ session('success') }}</p>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -14,7 +26,7 @@
                 </div>
 
                 <div class="">
-                    <form method="POST" action="{{ route('question.store') }}">
+                    <form method="POST" action="{{ route('question.store') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row mb-3">
@@ -48,7 +60,7 @@
                                 <div class="widget">
                                     <h6 class="widget-title"><span>Body:</span></h6>
 
-                                    <div id="summernote" class="form-control @error('body') is-invalid @enderror" name="body" required></div>
+                                    <textarea id="summernote" class="form-control @error('body') is-invalid @enderror" name="body"></textarea>
 
                                     @error('body')
                                         <div class="invalid-feedback">
@@ -56,6 +68,24 @@
                                         </div>
                                     @enderror
                                 </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+
+                                <div class="widget">
+                                    <h6 class="widget-title"><span>Add a picture:</span></h6>
+                                    <input type="file" name="picture" class="form-control @error('picture') is-invalid @enderror" accept="image/*">
+                                    @error('picture')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+
 
                             </div>
                         </div>
@@ -78,12 +108,34 @@
                                         @empty
                                             <option disabled>No subjects available.</option>
                                         @endforelse
-                                    </select> 
+                                    </select>
 
                                 </div>
 
                             </div>
                         </div>
+
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                              <div class="widget ">
+                                <h6 class="widget-title"><span>Tags:</span></h6>
+                                <br>
+                                <div class="tags">
+
+                                    @foreach ($tags as $tag)
+                                    <div class="m-3 form-check">
+                                        <input class=" form-check-input" type="checkbox" name="tags[]" value="{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                                        <label class="form-check-label">{{ $tag->name }}</label>
+                                    </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                            </div>
+                          </div>
+
+
 
 
 

@@ -1161,4 +1161,10 @@ a:hover {
 
 #subject-select {
     border: none;
-  }
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
