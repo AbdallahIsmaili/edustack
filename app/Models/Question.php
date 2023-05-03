@@ -21,6 +21,11 @@ class Question extends Model
         'tags', // Add this line
     ];
 
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);

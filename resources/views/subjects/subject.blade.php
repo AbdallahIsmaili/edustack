@@ -1,6 +1,6 @@
 @extends('layouts.application')
 
-@section('title', 'EduStack')
+@section('title', 'EduStack - ' . $subject->name)
 
 
 @section('content')

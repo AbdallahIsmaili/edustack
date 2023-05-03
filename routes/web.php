@@ -18,10 +18,12 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/subject/{name}', [App\Http\Controllers\HomeController::class, 'getSubject'])->name('getSubject');
 
+Route::get('/question/{id}', [App\Http\Controllers\QuestionController::class, 'index'])->name('questions.index');
+
 Auth::routes();
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    
+
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');

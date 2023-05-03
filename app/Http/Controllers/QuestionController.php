@@ -13,9 +13,13 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $subjects = Subject::all();
+        $tags = Tag::all();
+
+        return view('questions.question', compact('question','subjects', 'tags'));
     }
 
     /**
