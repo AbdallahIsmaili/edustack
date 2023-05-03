@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\QuestionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +21,7 @@ Route::get('/subject/{name}', [App\Http\Controllers\HomeController::class, 'getS
 Auth::routes();
 
 Route::middleware(['auth', 'admin'])->group(function () {
+    
     Route::get('dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
@@ -44,4 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\UserController::class, 'index'])->name('profile.index');
 
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+    Route::resource('/question', QuestionController::class)->names([
+        'index' => 'question.index'
+    ]);
 });

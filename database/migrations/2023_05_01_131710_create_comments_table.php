@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('answer_id')->nullable();
             $table->foreign('answer_id')->references('id')->on('answers');
             $table->text('body');
+            $table->string('url');
             $table->timestamps();
         });
     }
