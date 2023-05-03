@@ -251,7 +251,7 @@
           <div class="card-header d-flex align-items-center justify-content-between pb-0">
             <div class="card-title mb-0">
               <h5 class="m-0 me-2">Subjects Statistics</h5>
-              <small class="text-muted">42.82k Total Sales</small>
+              <small class="text-muted">{{ $subjectsCount }} Subjects</small>
             </div>
             <div class="dropdown">
               <button
@@ -277,69 +277,45 @@
                 <h2 class="mb-2">8,258</h2>
                 <span>Total Orders</span>
               </div>
+
               <div id="orderStatisticsChart"></div>
+
             </div>
+
+
             <ul class="p-0 m-0">
-              <li class="d-flex mb-4 pb-1">
-                <div class="avatar flex-shrink-0 me-3">
-                  <span class="avatar-initial rounded bg-label-primary"
-                    ><i class="bx bx-mobile-alt"></i
-                  ></span>
-                </div>
-                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                  <div class="me-2">
-                    <h6 class="mb-0">Electronic</h6>
-                    <small class="text-muted">Mobile, Earbuds, TV</small>
-                  </div>
-                  <div class="user-progress">
-                    <small class="fw-semibold">82.5k</small>
-                  </div>
-                </div>
-              </li>
-              <li class="d-flex mb-4 pb-1">
-                <div class="avatar flex-shrink-0 me-3">
-                  <span class="avatar-initial rounded bg-label-success"><i class="bx bx-closet"></i></span>
-                </div>
-                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                  <div class="me-2">
-                    <h6 class="mb-0">Fashion</h6>
-                    <small class="text-muted">T-shirt, Jeans, Shoes</small>
-                  </div>
-                  <div class="user-progress">
-                    <small class="fw-semibold">23.8k</small>
-                  </div>
-                </div>
-              </li>
-              <li class="d-flex mb-4 pb-1">
-                <div class="avatar flex-shrink-0 me-3">
-                  <span class="avatar-initial rounded bg-label-info"><i class="bx bx-home-alt"></i></span>
-                </div>
-                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                  <div class="me-2">
-                    <h6 class="mb-0">Decor</h6>
-                    <small class="text-muted">Fine Art, Dining</small>
-                  </div>
-                  <div class="user-progress">
-                    <small class="fw-semibold">849k</small>
-                  </div>
-                </div>
-              </li>
-              <li class="d-flex">
-                <div class="avatar flex-shrink-0 me-3">
-                  <span class="avatar-initial rounded bg-label-secondary"
-                    ><i class="bx bx-football"></i
-                  ></span>
-                </div>
-                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                  <div class="me-2">
-                    <h6 class="mb-0">Sports</h6>
-                    <small class="text-muted">Football, Cricket Kit</small>
-                  </div>
-                  <div class="user-progress">
-                    <small class="fw-semibold">99</small>
-                  </div>
-                </div>
-              </li>
+
+                @forelse ($subjects as $subject)
+                    <li class="d-flex mb-4 pb-1">
+
+                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+
+                        <div class="me-2">
+                            <h6 class="mb-0">{{ $subject->name }}</h6>
+                            <small class="text-muted">{{ Illuminate\Support\Str::limit($subject->description, 50) }}</small>
+                        </div>
+                        <div class="user-progress">
+                            <small class="fw-semibold">...</small>
+                        </div>
+                        </div>
+                    </li>
+                @empty
+
+                    <li class="d-flex mb-4 pb-1">
+
+                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+
+                        <div class="me-2">
+                            <h6 class="mb-0">No subjects yet</h6>
+                            <small class="text-muted">...</small>
+                        </div>
+                        <div class="user-progress">
+                            <small class="fw-semibold">...</small>
+                        </div>
+                        </div>
+                    </li>
+
+                @endforelse
             </ul>
           </div>
         </div>
@@ -367,31 +343,67 @@
           </div>
 
           <div class="card-body">
-            <form action="" method="post">
+            <form action="{{ route('subjects.search') }}" method="get">
                 <h5>Search on a subject</h5>
-                    <div>
-                        <label for="defaultFormControlInput" class="form-label">Search term</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="defaultFormControlInput"
-                            placeholder="Mathimatics"
-                            aria-describedby="defaultFormControlHelp"
-                        />
-                        <div id="defaultFormControlHelp" class="form-text">
-                            You can search using Subject (name or id).
+                <div>
+                    <label for="searchTerm" class="form-label">Search term</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="searchTerm"
+                        name="searchTerm"
+                        placeholder="Mathematics"
+                        aria-describedby="defaultFormControlHelp"
+                    />
+                    <div id="defaultFormControlHelp" class="form-text">
+                        You can search using Subject (name or id).
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-icon btn-primary">
+                    <span class="tf-icons bx bx-search"></span>
+                </button>
+            </form>
+
+            <div class="card-body">
+
+
+                @isset($searchedSubjects)
+
+            <ul class="p-0 m-0">
+
+                @forelse ($searchedSubjects as $searchedSubject)
+                    <li class="d-flex mb-4 pb-1">
+
+                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+
+                        <div class="me-2">
+                            <h6 class="mb-0">{{ $searchedSubject->name }}</h6>
+                            <small class="text-muted">{{ Illuminate\Support\Str::limit($searchedSubject->description, 50) }}</small>
+                        </div>
+                        </div>
+                    </li>
+                @empty
+
+                <li class="d-flex mb-4 pb-1">
+
+                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+
+                        <div class="me-2">
+                            <h6 class="mb-0">No subjects yet</h6>
+                            <small class="text-muted">...</small>
+                        </div>
+                        <div class="user-progress">
+                            <small class="fw-semibold">...</small>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-icon btn-primary">
-                        <span class="tf-icons bx bx-search"></span>
-                        <i class=''></i>
-                      </button>
-                </div>
+                </li>
 
+                @endforelse
+            </ul>
+            @endisset
+        </div>
+        </div>
 
-
-            </form>
-          </div>
         </div>
       </div>
       <!--/ Expense Overview -->

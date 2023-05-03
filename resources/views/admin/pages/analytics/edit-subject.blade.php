@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'EduDash- New Subject')
+@section('title', 'EduDash- Edit Subject')
 
 
 @section('content')
@@ -12,7 +12,7 @@
             aria-atomic="true">
             <div class="toast-header">
                 <i class="bx bx-bell me-2"></i>
-                <div class="me-auto fw-semibold">Cool</div>
+                <div class="me-auto fw-semibold">Done</div>
                 <small>Now</small>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -29,7 +29,7 @@
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-          <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Analytics/Subjects/</span> New Subject</h4>
+          <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Analytics/<a href="{{ route('subjects.index') }}">Subjects</a>/</span> Edit Subject: {{ $subject->name }}</h4>
 
           <!-- Basic Layout & Basic with Icons -->
           <div class="row">
@@ -37,17 +37,18 @@
             <div class="col-xxl">
               <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                  <h5 class="mb-0">Add new subject</h5>
+                  <h5 class="mb-0">Edit subject</h5>
                 </div>
                 <div class="card-body">
-                  <form method="POST" action="{{ route('subjects.store') }}">
+                  <form method="POST" action="{{ route('subjects.update', $subject->id) }}">
 
                     @csrf
+                    @method('PUT')
 
                     <div class="row mb-3">
                       <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
                       <div class="col-sm-10">
-                        <input type="text" name="subject_name" class="form-control" id="basic-default-name" placeholder="Physics" />
+                        <input type="text" value="{{ $subject->name }}" name="subject_name" class="form-control" id="basic-default-name" placeholder="Physics" />
                       </div>
                     </div>
 
@@ -57,6 +58,7 @@
                         <textarea
                             name="subject_desc"
                             id="basic-default-message"
+                            value="{{ $subject->description }}"
                             class="form-control"
                             placeholder="Everything about physics."
                             aria-label="Everything about physics."
@@ -66,7 +68,7 @@
                     </div>
                     <div class="row justify-content-end">
                       <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Send</button>
+                        <button type="submit" class="btn btn-secondary">Update</button>
                       </div>
                     </div>
                   </form>

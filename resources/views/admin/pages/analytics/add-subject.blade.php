@@ -29,7 +29,7 @@
         <!-- Content -->
 
         <div class="container-xxl flex-grow-1 container-p-y">
-          <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Analytics/Subjects/</span> New Subject</h4>
+          <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Analytics/<a href="{{ route('subjects.index') }}">Subjects</a>/</span> New Subject</h4>
 
           <!-- Basic Layout & Basic with Icons -->
           <div class="row">
@@ -39,38 +39,9 @@
                 <div class="card-header d-flex align-items-center justify-content-between">
                   <h5 class="mb-0">Add new subject</h5>
                 </div>
-                <div class="card-body">
-                  <form method="POST" action="{{ route('subjects.store') }}">
 
-                    @csrf
+                @livewire('create-subject-form');
 
-                    <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="subject_name" class="form-control" id="basic-default-name" placeholder="Physics" />
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label" for="basic-default-message">Description</label>
-                      <div class="col-sm-10">
-                        <textarea
-                            name="subject_desc"
-                            id="basic-default-message"
-                            class="form-control"
-                            placeholder="Everything about physics."
-                            aria-label="Everything about physics."
-                            aria-describedby="basic-icon-default-message2"
-                        ></textarea>
-                      </div>
-                    </div>
-                    <div class="row justify-content-end">
-                      <div class="col-sm-10">
-                        <button type="submit" class="btn btn-primary">Send</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
               </div>
             </div>
           </div>

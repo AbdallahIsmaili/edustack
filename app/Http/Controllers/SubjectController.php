@@ -14,8 +14,11 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::all();
-        return view('admin.pages.analytics.subjects', compact('subjects'));
+        $subjectsCount = $subjects->count();
+
+        return view('admin.pages.analytics.subjects', compact('subjects', 'subjectsCount'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -30,15 +33,21 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'subject_name' => 'required',
+            'subject_desc' => 'required',
+        ]);
+
+        // Store subject in the database
         $subject = Subject::create([
             'name' => $request->subject_name,
             'description' => $request->subject_desc
         ]);
 
-        return redirect()
-            ->route('subjects.create')
-            ->with('success', 'Cool the new subject ' . $subject->name . ' created successfully!');
+        // Redirect to a success page or perform any other actions
+        return redirect()->route('subjects.index')->with('success', 'Cool the new subject ' . $subject->name . ' created successfully!');
     }
+
 
 
     /**
@@ -62,9 +71,14 @@ class SubjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subject $subject)
+    public function update(Request $request, $id)
     {
-        //
+        $subject = Subject::findOrFail($id);
+        $subject->name = $request->subject_name;
+        $subject->description = $request->subject_desc;
+        $subject->save();
+
+        return redirect()->route('subjects.index')->with('success', 'Awesome, the subject ' . $subject->name . ' updated successfully!');
     }
 
     /**
@@ -84,20 +98,32 @@ class SubjectController extends Controller
 
     public function disable($id)
     {
-        $subject = Subject::find($id);
+        $subject = Subject::findOrFail($id);
         $subject->is_active = false;
         $subject->save();
 
         return redirect()->back();
     }
 
+
     public function enable($id)
     {
-        $subject = Subject::find($id);
+        $subject = Subject::findOrFail($id);
         $subject->is_active = true;
         $subject->save();
 
         return redirect()->back();
+    }
+
+    public function search(Request $request)
+    {
+        $subjects = Subject::all();
+        $subjectsCount = $subjects->count();
+
+        $searchTerm = $request->input('searchTerm');
+        $searchedSubjects = Subject::where('name', 'like', '%' . $searchTerm . '%')->orWhere('id', $searchTerm)->get();
+
+        return view('admin.pages.analytics.subjects', compact('searchedSubjects', 'subjects', 'subjectsCount'));
     }
 
 }

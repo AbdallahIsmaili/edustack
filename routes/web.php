@@ -15,6 +15,8 @@ use App\Http\Controllers\SubjectController;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/subject/{name}', [App\Http\Controllers\HomeController::class, 'getSubject'])->name('getSubject');
+
 Auth::routes();
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -33,6 +35,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/subjects/{id}/destroy', [SubjectController::class, 'destroy'])->name('subjects.destroy');
 
     Route::get('/subjects/{id}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
+
+    Route::get('/subjects', [SubjectController::class, 'search'])->name('subjects.search');
 
 });
 
