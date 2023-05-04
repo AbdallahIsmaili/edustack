@@ -1,13 +1,21 @@
 @extends('layouts.application')
 
-@section('title', 'EduStack')
+@section('title', 'EduStack - ' . $tag->name)
 
 
 @section('content')
 
+<h2>{{ strtoupper($tag->name) }}: </h2>
+<p>
+    > {{ strtolower($tag->description) }}
+</p>
+
+<section class="section">
 	<div class="container">
-		<div class="columns is-desktop is-multiline">
-			<div class="column is-8-desktop">
+		<div class="columns is-multiline">
+
+			<div class="column is-12">
+
 				<article class="columns is-multiline is-justify-content-center mb-6">
 					<div class="column is-12">
 						<div class="post-slider">
@@ -16,11 +24,11 @@
 							<img loading="lazy" src="{{ asset('assets/images/post/post-3.jpg') }}" class="" alt="post-thumb">
 						</div>
 					</div>
-					<div class="column is-12">
-						<h3><a class="post-title" href="post-elements.html">Elements That You Can Use To Create A New Post On This Template.</a></h3>
+					<div class="column is-10-desktop">
+						<h3><a class="post-title" href="post-elements.html">Elements That You Can Use To Create A New Post On This
+                        Template.</a></h3>
 						<ul class="list-inline post-meta mb-4">
-							<li class="list-inline-item"><i class="ti-user mr-2"></i>
-								<a href="author.html">John Doe</a>
+							<li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
 							</li>
 							<li class="list-inline-item">Date : March 15, 2020</li>
 							<li class="list-inline-item">Categories : <a href="#!" class="ml-1">Photography </a>
@@ -37,7 +45,7 @@
 							<img loading="lazy" src="{{ asset('assets/images/post/post-1.jpg') }}" class="" alt="post-thumb">
 						</div>
 					</div>
-					<div class="column is-12">
+					<div class="column is-10-desktop">
 						<h3><a class="post-title" href="post-details-1.html">Cheerful Loving Couple Bakers Drinking Coffee</a></h3>
 						<ul class="list-inline post-meta mb-4">
 							<li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
@@ -58,7 +66,7 @@
 							<img loading="lazy" src="{{ asset('assets/images/post/post-4.jpg') }}" class="" alt="post-thumb">
 						</div>
 					</div>
-					<div class="column is-12">
+					<div class="column is-10-desktop">
 						<h3><a class="post-title" href="post-details-2.html">Cheerful Loving Couple Bakers Drinking Coffee</a></h3>
 						<ul class="list-inline post-meta mb-4">
 							<li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
@@ -78,7 +86,7 @@
 							<img loading="lazy" src="{{ asset('assets/images/post/post-3.jpg') }}" class="" alt="post-thumb">
 						</div>
 					</div>
-					<div class="column is-12">
+					<div class="column is-10-desktop">
 						<h3><a class="post-title" href="post-details-2.html">Cheerful Loving Couple Bakers Drinking Coffee</a></h3>
 						<ul class="list-inline post-meta mb-4">
 							<li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
@@ -99,7 +107,7 @@
 							<img loading="lazy" src="{{ asset('assets/images/post/post-1.jpg') }}" class="" alt="post-thumb">
 						</div>
 					</div>
-					<div class="column is-12">
+					<div class="column is-10-desktop">
 						<h3><a class="post-title" href="post-details-1.html">Cheerful Loving Couple Bakers Drinking Coffee</a></h3>
 						<ul class="list-inline post-meta mb-4">
 							<li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
@@ -120,7 +128,7 @@
 							<img loading="lazy" src="{{ asset('assets/images/post/post-5.jpg') }}" class="" alt="post-thumb">
 						</div>
 					</div>
-					<div class="column is-12">
+					<div class="column is-10-desktop">
 						<h3><a class="post-title" href="post-details-1.html">Cheerful Loving Couple Bakers Drinking Coffee</a></h3>
 						<ul class="list-inline post-meta mb-4">
 							<li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
@@ -135,7 +143,7 @@
 					</div>
 				</article>
 				<article class="columns is-multiline is-justify-content-center mb-6">
-					<div class="column is-12">
+					<div class="column is-10-desktop">
 						<h3><a class="post-title" href="post-details-2.html">Cheerful Loving Couple Bakers Drinking Coffee</a></h3>
 						<ul class="list-inline post-meta mb-4">
 							<li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
@@ -150,92 +158,8 @@
 					</div>
 				</article>
 			</div>
-			<aside class="column is-4-desktop">
-				   <!-- Search -->
-   <div class="widget">
-      <h5 class="widget-title"><span>Search</span></h5>
-      <form action="javascript:void(0)" class="widget-search">
-         <input id="search-query2" name="s" type="search" placeholder="Type &amp; Hit Enter...">
-         <button type="submit"><i class="ti-search"></i>
-         </button>
-      </form>
-   </div>
-
-   <!-- categories -->
-   <div class="widget">
-    <h5 class="widget-title"><span>Subjects</span></h5>
-    <ul class="list-unstyled widget-list">
-      @forelse ($subjects as $subject)
-        <li>
-          <a href="{{ route('getSubject', $subject->name) }}" class="is-flex">
-            {{ $subject->name }}
-            <small class="ml-auto">(...)</small>
-          </a>
-        </li>
-      @empty
-        <li>No subjects found.</li>
-      @endforelse
-    </ul>
-  </div>
-
-
-   <!-- tags -->
-   <div class="widget">
-      <h5 class="widget-title"><span>Tags</span></h5>
-      <ul class="list-inline widget-list-inline">
-
-         @forelse ($tags as $tag)
-            <li class="list-inline-item">
-                <a href="{{ route('getTag', $tag->name) }}">{{ $tag->name }}</a>
-            </li>
-        @empty
-            <li>No tags found.</li>
-        @endforelse
-      </ul>
-   </div>
-   <!-- latest post -->
-   <div class="widget">
-      <h5 class="widget-title"><span>Latest Article</span></h5>
-      <!-- post-item -->
-      <ul class="list-unstyled widget-list">
-         <li class="media widget-post is-align-items-center">
-            <a href="post-elements.html">
-               <img loading="lazy" src="{{ asset('assets/images/post/post-6.jpg') }}">
-            </a>
-            <div class="ml-4">
-               <h5 class="h6 mb-0"><a href="post-elements.html">Elements That You Can Use To Create A New Post On
-                     This Template.</a></h5>
-               <small>March 15, 2020</small>
-            </div>
-         </li>
-      </ul>
-      <ul class="list-unstyled widget-list">
-         <li class="media widget-post is-align-items-center">
-            <a href="post-details-1.html">
-               <img loading="lazy" src="{{ asset('assets/images/post/post-1.jpg') }}">
-            </a>
-            <div class="ml-4">
-               <h5 class="h6 mb-0"><a href="post-details-1.html">Cheerful Loving Couple Bakers Drinking Coffee</a>
-               </h5>
-               <small>March 14, 2020</small>
-            </div>
-         </li>
-      </ul>
-      <ul class="list-unstyled widget-list">
-         <li class="media widget-post is-align-items-center">
-            <a href="post-details-2.html">
-               <img loading="lazy" src="{{ asset('assets/images/post/post-2.jpg') }}">
-            </a>
-            <div class="ml-4">
-               <h5 class="h6 mb-0"><a href="post-details-2.html">Cheerful Loving Couple Bakers Drinking Coffee</a>
-               </h5>
-               <small>March 14, 2020</small>
-            </div>
-         </li>
-      </ul>
-   </div>
-			</aside>
 		</div>
 	</div>
+</section>
 
 @endsection

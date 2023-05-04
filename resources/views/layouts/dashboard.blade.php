@@ -198,7 +198,7 @@
                 </a>
                 </li>
                 <li class="menu-item">
-                <a href="ui-alerts.html" class="menu-link">
+                <a href="{{ route('tags.index') }}" class="menu-link">
                     <div data-i18n="Alerts">Tags</div>
                 </a>
                 </li>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\QuestionController;
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,9 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::get('/subject/{name}', [App\Http\Controllers\HomeController::class, 'getSubject'])->name('getSubject');
 
-Route::get('/question/{id}', [App\Http\Controllers\QuestionController::class, 'index'])->name('questions.index');
+Route::get('/tag/{name}', [App\Http\Controllers\HomeController::class, 'getTag'])->name('getTag');
+
+Route::get('/questions/{id}', [App\Http\Controllers\QuestionController::class, 'index'])->name('questions.index');
 
 Auth::routes();
 
@@ -32,6 +35,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
         'index' => 'subjects.index'
     ]);
 
+    Route::resource('dashboard/tags', TagController::class)->names([
+        'index' => 'tags.index'
+    ]);
+
     Route::put('/subjects/{id}/disable', [SubjectController::class, 'disable'])->name('subjects.disable');
 
     Route::put('/subjects/{id}/enable', [SubjectController::class, 'enable'])->name('subjects.enable');
@@ -40,7 +47,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/subjects/{id}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
 
-    Route::get('/subjects', [SubjectController::class, 'search'])->name('subjects.search');
+    Route::get('/dashboard/subject', [SubjectController::class, 'search'])->name('subjects.search');
+
+    Route::get('/dashboard/tag', [TagController::class, 'search'])->name('tags.search');
 
 });
 
