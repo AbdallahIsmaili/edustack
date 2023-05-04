@@ -13,14 +13,21 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index($id = null)
     {
-        $question = Question::findOrFail($id);
-        $subjects = Subject::all();
-        $tags = Tag::all();
-
-        return view('questions.question', compact('question','subjects', 'tags'));
+        if ($id) {
+            $question = Question::findOrFail($id);
+            $question->increment('views');
+            $subjects = Subject::all();
+            $tags = Tag::all();
+            return view('questions.question', compact('question','subjects', 'tags'));
+        } else {
+            $questions = Question::latest()->get();
+            return view('questions.questions', compact('questions'));
+        }
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -68,7 +75,8 @@ class QuestionController extends Controller
             $question->save();
         }
 
-        return redirect()->route('question.create')->with('success', 'Your question has been submitted.');
+        return redirect()->route('questions.index', ['id' => $question->id])->with('success', 'Your question has been submitted.');
+
     }
 
 

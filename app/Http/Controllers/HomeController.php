@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Tag;
@@ -34,19 +35,21 @@ class HomeController extends Controller
     public function getSubject($name)
     {
         $subject = Subject::where('name', $name)->firstOrFail();
+        $questions = $subject->questions()->latest()->get();
         $subjects = Subject::all();
 
-        $wantedSubject = Subject::where('name', $name)->get();
-        return view('subjects.subject', compact('subject', 'subjects', 'wantedSubject'));
+        return view('subjects.subject', compact('subject', 'questions', 'subjects'));
     }
+
 
     public function getTag($name)
     {
         $tag = Tag::where('name', $name)->firstOrFail();
+        $questions = $tag->questions()->latest()->get();
         $tags = Tag::all();
 
         $wantedTag = Tag::where('name', $name)->get();
-        return view('tags.tag', compact('tag', 'tags', 'wantedTag'));
+        return view('tags.tag', compact('tag', 'tags', 'questions'));
     }
 
 }

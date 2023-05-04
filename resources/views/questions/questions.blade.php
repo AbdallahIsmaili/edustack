@@ -1,38 +1,35 @@
 @extends('layouts.application')
 
-@section('title', 'EduStack - ' . $subject->name)
-
+@section('title', 'EduStack- Questions')
 
 @section('content')
 
-<h2>{{ strtoupper($subject->name) }}: </h2>
-<p>
-    > {{ strtolower($subject->description) }}
-</p>
+<div>
+    <h2>The latest questions: </h2>
+</div>
 
 <section class="section">
-    <div class="container">
-        <div class="columns is-multiline">
-
-            <div class="column is-12">
+	<div class="container">
+		<div class="columns is-multiline">
+			<div class="column is-12">
 
                 @foreach ($questions as $question)
 
                     <article class="columns is-multiline is-justify-content-center mb-6">
-
                         @if ($question->url != null)
 
-                            <div class="column is-12">
-                                <div class="post-slider">
-                                    <img loading="lazy" src="{{ $question->url }}" class="" alt="post-thumb">
-                                </div>z
+                            <div class="column is-4-tablet">
+                                <div class="post-slider slider-sm">
+                                    <img loading="lazy" src="{{ $question->url }}" class="" alt="post-thumb" style="height:200px; object-fit: cover;">
+                                </div>
                             </div>
 
                         @endif
 
-                        <div class="column is-10-desktop">
-                            <h3><a class="post-title" href="{{ route('questions.index', $question->id) }}">{{ $question->title }}</a></h3>
-                            <ul class="list-inline post-meta mb-4">
+                        <div class="column is-8-tablet">
+                            <h3 class="h5"><a class="post-title" href="{{ route('questions.index', $question->id) }}">{{ $question->title }}</a></h3>
+                            <ul class="list-inline post-meta mb-2">
+
                                 <li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
                                 </li>
 
@@ -96,15 +93,13 @@
                             </div>
                         </div>
                     </article>
-                    <hr>
-                @endforeach
 
-            </div>
-        </div>
-    </div>
+                @endforeach
+			</div>
+		</div>
+	</div>
 </section>
 
-<!-- Script to show/hide the modal -->
 <script>
 
         // Get all report modal elements

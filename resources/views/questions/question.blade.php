@@ -1,8 +1,14 @@
 @extends('layouts.application')
 
-@section('title', 'EduStack - question')
+@section('title', 'EduStack- ' . $question->title)
 
 @section('content')
+
+@if (session('success'))
+
+    <div id="toast" class="toast"></div>
+
+@endif
 
 <section class="section">
 	<div class="container">
@@ -21,7 +27,7 @@
 
                     <li class="list-inline-item">Tags :
                     @foreach ($question->tags as $tag)
-                        <a href="#!" class="ml-1">{{ $tag->name }}</a>
+                        <a href="{{ route('getTag', $tag->name) }}" class="ml-1">{{ $tag->name }}</a>
                     @endforeach
                     </li>
 
@@ -49,4 +55,19 @@
 		</article>
 	</div>
 </section>
+
+<script>
+    function showToast(message) {
+      var toast = document.getElementById("toast");
+      toast.innerHTML = message;
+      toast.classList.add("show-toast");
+      setTimeout(function() {
+        toast.classList.remove("show-toast");
+      }, 5000);
+    }
+    @if (session('success'))
+        showToast('{{ session('success') }}');
+    @endif
+  </script>
+
 @endsection

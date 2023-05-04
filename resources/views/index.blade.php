@@ -162,21 +162,22 @@
    </div>
 
    <!-- categories -->
-   <div class="widget">
-    <h5 class="widget-title"><span>Subjects</span></h5>
-    <ul class="list-unstyled widget-list">
-      @forelse ($subjects as $subject)
-        <li>
-          <a href="{{ route('getSubject', $subject->name) }}" class="is-flex">
-            {{ $subject->name }}
-            <small class="ml-auto">(...)</small>
-          </a>
-        </li>
-      @empty
-        <li>No subjects found.</li>
-      @endforelse
-    </ul>
-  </div>
+    <div class="widget">
+        <h5 class="widget-title"><span>Subjects</span></h5>
+        <ul class="list-unstyled widget-list">
+            @forelse ($subjects as $subject)
+                <li>
+                    <a href="{{ route('getSubject', $subject->name) }}" class="is-flex">
+                        {{ $subject->name }}
+                        <small class="ml-auto">({{ $subject->questions ? $subject->questions->count() : 0 }})</small>
+                    </a>
+                </li>
+            @empty
+                <li>No subjects found.</li>
+            @endforelse
+        </ul>
+    </div>
+
 
 
    <!-- tags -->
