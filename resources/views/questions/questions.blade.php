@@ -27,13 +27,45 @@
                         @endif
 
                         <div class="column is-8-tablet">
-                            <h3 class="h5"><a class="post-title" href="{{ route('questions.index', $question->id) }}">{{ $question->title }}</a></h3>
+                            <h3 class="h5"><a class="post-title" href="{{ route('questions.show', $question->id) }}">{{ $question->title }}</a></h3>
+
+
+                            <li class="list-inline-item ml-3">
+                                @if (auth()->user()->role_id === 1 || $question->user_id === auth()->id() || auth()->user()->role_id === 3)
+                                    <div class="dropdown is-right is-hoverable">
+                                        <div class="dropdown-trigger">
+                                            <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
+                                                <span>...</span>
+                                            </button>
+                                        </div>
+                                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                            <div class="dropdown-content">
+                                                @can('update', $question)
+                                                    <a href="{{ route('questions.edit', $question->id) }}" class="dropdown-item">Edit</a>
+                                                @endcan
+                                                @can('delete', $question)
+                                                    <form action="{{ route('questions.destroy', $question->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item">Delete</button>
+                                                    </form>
+                                                @endcan
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </li>
+
+
+
+
+
                             <ul class="list-inline post-meta mb-2">
 
                                 <li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
                                 </li>
 
-                                <li class="list-inline-item">Views : {{ $question->views }}</li>
+                                <li class="list-inline-item">Views : {{ $question->views / 2 }}</li>
 
                                 @if ($question->solved == 0)
                                     <li style="color: darkred" class="list-inline-item">Still encode</li>
@@ -89,7 +121,8 @@
                             <div>
                                 {!! $question->body !!}
                                 <br>
-                                <a href="post-elements.html" class="btn btn-outline-primary">Continue Reading</a>
+                                <a href="{{ route('questions.show', $question->id) }}" class="btn btn-outline-primary">Continue Reading</a>
+
                             </div>
                         </div>
                     </article>

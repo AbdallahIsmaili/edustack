@@ -10,24 +10,15 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
-    public function index($id = null)
+    public function index()
     {
-        if ($id) {
-            $question = Question::findOrFail($id);
-            $question->increment('views');
-            $subjects = Subject::all();
-            $tags = Tag::all();
-            return view('questions.question', compact('question','subjects', 'tags'));
-        } else {
             $questions = Question::latest()->get();
             return view('questions.questions', compact('questions'));
-        }
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -75,43 +66,81 @@ class QuestionController extends Controller
             $question->save();
         }
 
-        return redirect()->route('questions.index', ['id' => $question->id])->with('success', 'Your question has been submitted.');
+        return redirect()->route('questions.show', ['id' => $question->id])->with('success', 'Your question has been submitted.');
 
     }
-
-
-
-
 
     /**
      * Display the specified resource.
      */
-    public function show(Question $question)
+    public function show($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $subjects = Subject::all();
+        $tags = Tag::all();
+        $question->increment('views');
+        return view('questions.question', compact('question', 'subjects', 'tags'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Question $question)
     {
-        //
+        $this->authorize('update', $question);
+
+        $subjects = Subject::all();
+        $tags = Tag::all();
+
+        return view('questions.edit-question', compact('question', 'subjects', 'tags'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Question $question)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|min:10|max:255',
+            'body' => 'required|min:20',
+            'subject_id' => 'required|exists:subjects,id',
+            'picture' => 'nullable|image|max:1024',
+            'tags.*' => 'exists:tags,id',
+        ]);
+
+        $question->title = $validatedData['title'];
+        $question->body = $validatedData['body'];
+        $question->subject_id = $validatedData['subject_id'];
+
+        if ($request->hasFile('picture')) {
+            $file = $request->file('picture');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('public/images/uploads/questions', $filename);
+            $url = Storage::url($path);
+            $question->url = $url;
+        }
+
+        $question->tags()->sync($validatedData['tags']);
+
+        $question->save();
+
+        return redirect()->route('questions.show', ['id' => $question->id])->with('success', 'Your question has been updated.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Question $question)
     {
-        //
+        $this->authorize('delete', $question);
+
+        $question->delete();
+
+        return redirect()->route('questions.index');
     }
 }

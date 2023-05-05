@@ -19,16 +19,13 @@ use App\Http\Controllers\QuestionController;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Route that shows all the questions posted in the application.
-Route::get('/questions', [App\Http\Controllers\HomeController::class, 'questions'])->name('questions');
+// Route::get('/questions', [App\Http\Controllers\HomeController::class, 'questions'])->name('questions');
 
 // Route that shows all the questions in a particular subject.
 Route::get('/subject/{name}', [App\Http\Controllers\HomeController::class, 'getSubject'])->name('getSubject');
 
 //Route that shows all the questions associated with a particular tag.
 Route::get('/tag/{name}', [App\Http\Controllers\HomeController::class, 'getTag'])->name('getTag');
-
-//Route that shows the details of a particular question.
-Route::get('/questions/{id}', [App\Http\Controllers\QuestionController::class, 'index'])->name('questions.index');
 
 Auth::routes();
 
@@ -77,8 +74,11 @@ Route::middleware(['auth'])->group(function () {
     // Route to log out authenticated users.
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-    //Unknown route 
-    Route::resource('/question', QuestionController::class)->names([
-        'index' => 'question.index'
+    //Route to manage questions
+    Route::resource('/questions', QuestionController::class)->names([
+        'index' => 'questions.index'
     ]);
 });
+
+//Route that shows the details of a particular question.
+// Route::get('/questions/{id}', [App\Http\Controllers\QuestionController::class, 'show'])->name('questions.show');

@@ -64,6 +64,10 @@
                             <a class="navbar-link is-arrowless" href="contact.html">Contact</a>
                         </li>
 
+                        <li class="navbar-item">
+                            <a class="navbar-link is-arrowless" href="{{ route('questions.index') }}">Questions</a>
+                        </li>
+
                         @if(auth()->check())
                             <li class="navbar-item has-dropdown is-hoverable has-active">
                                 <a class="navbar-link">Account <small class="ti-angle-down ml-1"></small></a>
@@ -71,7 +75,7 @@
 
                                     <a class="navbar-item" href="{{ route('profile.index') }}">My profile</a>
 
-                                    <a class="navbar-item" href="{{ route('question.create') }}">Ask question</a>
+                                    <a class="navbar-item" href="{{ route('questions.create') }}" method="GET">Ask question</a>
 
                                     <a class="navbar-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();

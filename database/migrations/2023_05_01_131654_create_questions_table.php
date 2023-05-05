@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('subject_id')->constrained('subjects');
             $table->string('title')->nullable();
             $table->text('body')->nullable();
-            $table->string('url');
+            $table->string('url')->default('');
             $table->unsignedInteger('views')->default(0);
             $table->unsignedInteger('votes')->default(0);
             $table->boolean('solved')->default(false);

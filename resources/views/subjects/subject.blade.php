@@ -92,7 +92,7 @@
                             <div>
                                 {!! $question->body !!}
                                 <br>
-                                <a href="post-elements.html" class="btn btn-outline-primary">Continue Reading</a>
+                                <a href="{{ route('questions.index', $question->id) }}" class="btn btn-outline-primary">Continue Reading</a>
                             </div>
                         </div>
                     </article>
