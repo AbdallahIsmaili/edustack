@@ -34,6 +34,27 @@
                     </li>
 
                     <li class="list-inline-item ml-3">
+                        <a class="report-modal-btn" data-target="#report-modal-{{$question->id}}">
+                          <i class="ti-flag"></i> Report
+                        </a>
+                      </li>
+
+                    <!-- Report Modal -->
+                    <div id="report-modal-{{$question->id}}" class="report-modal">
+                        <div class="report-modal-content">
+                          <span class="report-modal-close">&times;</span>
+                          <h5 class="report-modal-title">Report This Question</h5>
+                          <p>Please provide a reason for reporting this question:</p>
+                          <form>
+                            <div class="form-group">
+                              <textarea class="form-control" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                        </div>
+                      </div>
+
+                    <li class="list-inline-item ml-3">
                         @if (auth()->user()->role_id === 1 || $question->user_id === auth()->id() || auth()->user()->role_id === 3)
                             <div class="dropdown is-right is-hoverable">
                                 <div class="dropdown-trigger">
@@ -58,6 +79,8 @@
                             </div>
                         @endif
                     </li>
+
+
 
 				</ul>
 			</div>
@@ -96,6 +119,34 @@
     @if (session('success'))
         showToast('{{ session('success') }}');
     @endif
-  </script>
+
+        // Get all report modal elements
+    var reportModals = document.querySelectorAll('.report-modal');
+    // Get all report modal buttons
+    var reportModalBtns = document.querySelectorAll('.report-modal-btn');
+    // Get all report modal close buttons
+    var reportModalCloses = document.querySelectorAll('.report-modal-close');
+
+    // Loop through all report modal buttons and add event listeners
+    reportModalBtns.forEach(function(reportModalBtn, index) {
+    reportModalBtn.addEventListener('click', function() {
+        reportModals[index].style.display = 'block';
+    });
+    });
+
+    // When the user clicks the close button or outside the modal, hide the modal
+    window.addEventListener('click', function(event) {
+    reportModalCloses.forEach(function(reportModalClose) {
+        reportModals.forEach(function(reportModal) {
+        if (event.target == reportModal || event.target == reportModalClose) {
+            reportModal.style.display = 'none';
+        }
+        });
+    });
+    });
+
+
+
+</script>
 
 @endsection
