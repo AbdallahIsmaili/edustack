@@ -60,7 +60,7 @@
                                         @php $count = 0 @endphp
                                         @foreach ($question->tags as $tag)
                                             @if ($count < 3)
-                                                <a href="{{ route('getTag', $tag->name) }}" class="ml-1">{{ $tag->name }}</a>
+                                                <a href="{{ route('tags.questions', $tag->name) }}" class="ml-1">{{ $tag->name }}</a>
                                                 @php $count++ @endphp
                                             @else
                                                 @break

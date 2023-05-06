@@ -104,10 +104,6 @@
                         @else
 
                             <li class="navbar-item">
-                                <a class="navbar-link is-arrowless" href="contact.html">Questions</a>
-                            </li>
-
-                            <li class="navbar-item">
                                     <a class="navbar-link is-arrowless" href="{{ route('login') }}">Login</a>
                                     <a class="navbar-link is-arrowless" href="{{ route('register') }}">Register</a>
                             </li>

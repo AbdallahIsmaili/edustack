@@ -4,6 +4,12 @@
 
 @section('content')
 
+@if (session('deleted'))
+
+    <div style="color: darkred;" id="toast" class="toast"></div>
+
+@endif
+
 <div>
     <h2>The latest questions: </h2>
 </div>
@@ -31,7 +37,7 @@
 
 
                             <li class="list-inline-item ml-3">
-                                @if (auth()->user()->role_id === 1 || $question->user_id === auth()->id() || auth()->user()->role_id === 3)
+                                @if (auth()->check() && (auth()->user()->role_id === 1 || $question->user_id === auth()->id() || auth()->user()->role_id === 3))
                                     <div class="dropdown is-right is-hoverable">
                                         <div class="dropdown-trigger">
                                             <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -86,7 +92,7 @@
                                         @php $count = 0 @endphp
                                         @foreach ($question->tags as $tag)
                                             @if ($count < 3)
-                                                <a href="{{ route('getTag', $tag->name) }}" class="ml-1">{{ $tag->name }}</a>
+                                                <a href="{{ route('tags.questions', $tag->name) }}" class="ml-1">{{ $tag->name }}</a>
                                                 @php $count++ @endphp
                                             @else
                                                 @break
@@ -134,6 +140,18 @@
 </section>
 
 <script>
+
+    function showToast(message) {
+      var toast = document.getElementById("toast");
+      toast.innerHTML = message;
+      toast.classList.add("show-toast");
+      setTimeout(function() {
+        toast.classList.remove("show-toast");
+      }, 5000);
+    }
+    @if (session('deleted'))
+        showToast('{{ session('deleted') }}');
+    @endif
 
         // Get all report modal elements
     var reportModals = document.querySelectorAll('.report-modal');

@@ -167,7 +167,7 @@
         <ul class="list-unstyled widget-list">
             @forelse ($subjects as $subject)
                 <li>
-                    <a href="{{ route('getSubject', $subject->name) }}" class="is-flex">
+                    <a href="{{ route('subjects.questions', $subject->name) }}" class="is-flex">
                         {{ $subject->name }}
                         <small class="ml-auto">({{ $subject->questions ? $subject->questions->count() : 0 }})</small>
                     </a>
@@ -187,7 +187,7 @@
 
          @forelse ($tags as $tag)
             <li class="list-inline-item">
-                <a href="{{ route('getTag', $tag->name) }}">{{ $tag->name }}</a>
+                <a href="{{ route('tags.questions', $tag->name) }}">{{ $tag->name }}</a>
             </li>
         @empty
             <li>No tags found.</li>

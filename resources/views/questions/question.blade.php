@@ -24,12 +24,12 @@
 					</li>
 					<li class="list-inline-item">Date : {{ $question->created_at }}</li>
 
-					<li class="list-inline-item">Subject : <a href="{{ route('getSubject', $question->subject->name) }}" class="ml-1">{{ $question->subject->name }} </a>
+					<li class="list-inline-item">Subject : <a href="{{ route('subjects.questions', $question->subject->name) }}" class="ml-1">{{ $question->subject->name }} </a>
                     </li>
 
                     <li class="list-inline-item">Tags :
                     @foreach ($question->tags as $tag)
-                        <a href="{{ route('getTag', $tag->name) }}" class="ml-1">{{ $tag->name }}</a>
+                        <a href="{{ route('tags.questions', $tag->name) }}" class="ml-1">{{ $tag->name }}</a>
                     @endforeach
                     </li>
 
@@ -55,7 +55,7 @@
                       </div>
 
                     <li class="list-inline-item ml-3">
-                        @if (auth()->user()->role_id === 1 || $question->user_id === auth()->id() || auth()->user()->role_id === 3)
+                        @if (auth()->check() && (auth()->user()->role_id === 1 || $question->user_id === auth()->id() || auth()->user()->role_id === 3))
                             <div class="dropdown is-right is-hoverable">
                                 <div class="dropdown-trigger">
                                     <button class="button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
