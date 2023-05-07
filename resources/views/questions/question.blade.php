@@ -10,6 +10,13 @@
 
 @endif
 
+@if (session('error'))
+
+    <div style="background-color: red;" id="toast" class="toast"></div>
+
+@endif
+
+
 <section class="section">
 	<div class="container">
 		<article class="columns is-multiline mb-5 is-justify-content-center">
@@ -104,10 +111,138 @@
                 </div>
             </div>
 		</article>
+
+        <hr>
+        <hr>
+
+        <div>
+            <h3>Answers:</h3>
+            <br>
+            <br>
+
+            @forelse ($answers as $answer)
+                <div class="answer-content">
+                    <div class="user-info">
+                    @if ($answer->user->role->name === 'Admin')
+                        <span class="user-role">
+                        <i class="ti-crown mr-2"></i>
+                        </span>
+                    @elseif ($answer->user->role->name === 'Teacher')
+                        <span class="user-role">
+                        <i class="ti-book mr-2"></i>
+                        </span>
+                    @else
+                        <span class="user-role">
+                        <i class="ti-crown mr-2"></i>
+                        </span>
+                    @endif
+                    <span class="username">{{ $answer->user->name }}</span>
+                    </div>
+                    <blockquote>
+                    <p>{!! $answer->body !!}</p>
+                    </blockquote>
+                    <div class="vote-buttons">
+                        <button class="upvote-btn"><i class='bx bxs-left-top-arrow-circle'></i></button>
+                        <span class="separator">{{ $answer->up_votes - $answer->down_votes }}</span>
+                        <button class="downvote-btn"><i class='bx bxs-right-down-arrow-circle' ></i></button>
+                    </div>
+                    <hr>
+                </div>
+
+                @empty
+                <div class="content">
+                    <blockquote>
+                    <p>No answers yet.</p>
+                    </blockquote>
+                    <hr>
+                </div>
+                @endforelse
+
+
+
+
+              <h4>Add an answer: </h4>
+            <br>
+
+            <div>
+                <form method="POST" action="{{ route('answers.store', ['question_id' => $question->id]) }}" enctype="multipart/form-data">
+
+                    @csrf
+
+                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                    <input type="hidden" name="question_id" value="{{ $question->id }}">
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+
+                            <div class="widget">
+                                <h6 class="widget-title"><span>Body:</span></h6>
+
+                                <textarea id="summernote" class="form-control @error('body') is-invalid @enderror" name="body"></textarea>
+
+                                @error('body')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+
+                            <div class="widget">
+                                <h6 class="widget-title"><span>Add a picture:</span></h6>
+                                <input type="file" name="picture" class="form-control @error('picture') is-invalid @enderror" accept="image/*">
+                                @error('picture')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="row mb-0">
+                        <div class="col-md-6 offset-md-4">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('Submit your answer') }}
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+
 	</div>
 </section>
 
 <script>
+
+    $('#summernote').summernote({
+      placeholder: 'Hello stand alone ui',
+      tabsize: 2,
+      height: 250,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['codeview', 'help']]
+      ]
+    });
+
+
     function showToast(message) {
       var toast = document.getElementById("toast");
       toast.innerHTML = message;
@@ -118,6 +253,9 @@
     }
     @if (session('success'))
         showToast('{{ session('success') }}');
+    @endif
+    @if (session('error'))
+        showToast('{{ session('error') }}');
     @endif
 
         // Get all report modal elements

@@ -24,14 +24,14 @@
 
                             <div class="column is-12">
                                 <div class="post-slider">
-                                    <img loading="lazy" src="{{ $question->url }}" class="" alt="post-thumb">
+                                    <img loading="lazy" src="{{ $question->url }}" class="" alt="post-thumb" style="width: 100%; height: 450px; object-fit: cover;">
                                 </div>z
                             </div>
 
                         @endif
 
                         <div class="column is-10-desktop">
-                            <h3><a class="post-title" href="{{ route('questions.index', $question->id) }}">{{ $question->title }}</a></h3>
+                            <h3><a class="post-title" href="{{ route('questions.show', $question->id) }}">{{ $question->title }}</a></h3>
                             <ul class="list-inline post-meta mb-4">
                                 <li class="list-inline-item"><i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
                                 </li>
@@ -47,7 +47,7 @@
 
                                 <li class="list-inline-item">Date : {{ $question->created_at }}</li>
 
-                                <li class="list-inline-item">Subject : <a href="#!" class="ml-1">{{ $question->subject->name }} </a>
+                                <li class="list-inline-item">Subject :  <a href="{{ route('subjects.questions', $question->subject->name ) }}" class="ml-1">{{ $question->subject->name }} </a>
                                 </li>
 
 
@@ -92,7 +92,7 @@
                             <div>
                                 {!! $question->body !!}
                                 <br>
-                                <a href="{{ route('questions.index', $question->id) }}" class="btn btn-outline-primary">Continue Reading</a>
+                                <a href="{{ route('questions.show', $question->id) }}" class="btn btn-outline-primary">Continue Reading</a>
                             </div>
                         </div>
                     </article>

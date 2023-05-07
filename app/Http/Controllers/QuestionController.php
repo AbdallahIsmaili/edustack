@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Answer;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Question;
@@ -78,8 +80,9 @@ class QuestionController extends Controller
         $question = Question::findOrFail($id);
         $subjects = Subject::all();
         $tags = Tag::all();
+        $answers = Answer::all();
         $question->increment('views');
-        return view('questions.question', compact('question', 'subjects', 'tags'));
+        return view('questions.question', compact('question', 'subjects', 'tags', 'answers'));
     }
 
 

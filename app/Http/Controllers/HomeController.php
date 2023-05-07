@@ -27,9 +27,10 @@ class HomeController extends Controller
     public function index()
     {
         $subjects = Subject::all();
+        $questions = Question::all();
         $tags = Tag::all();
 
-        return view('index', compact('subjects', 'tags'));
+        return view('index', compact('subjects', 'tags', 'questions'));
     }
 
     public function getSubject($name)

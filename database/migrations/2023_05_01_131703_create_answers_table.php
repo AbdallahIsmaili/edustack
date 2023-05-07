@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('question_id')->constrained()->onDelete('cascade');
             $table->text('body');
-            $table->string('url');
+            $table->string('url')->default("");
             $table->integer('up_votes')->default(0);
             $table->integer('down_votes')->default(0);
             $table->boolean('accepted')->default(false);

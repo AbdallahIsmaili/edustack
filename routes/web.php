@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,6 +97,7 @@ Route::get('/subjects/{name}/questions', [App\Http\Controllers\HomeController::c
 // Route that shows all the questions associated with a particular tag.
 Route::get('/tags/{name}/questions', [App\Http\Controllers\HomeController::class, 'getTag'])->name('tags.questions');
 
+
 Auth::routes();
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -151,6 +153,15 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'questions.update',
         'destroy' => 'questions.destroy'
     ]);
+
+    //Route to manage answers
+    Route::resource('/answers', AnswerController::class)->except(['index', 'show'])->names([
+        'create' => 'answers.create',
+        'store' => 'answers.store',
+        'edit' => 'answers.edit',
+        'update' => 'answers.update',
+        'destroy' => 'answers.destroy'
+    ])->middleware('auth')->names('answers');
 });
 
 // Route that shows a question's details.

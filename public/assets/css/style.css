@@ -1316,3 +1316,88 @@ a:hover {
   .show-toast {
     opacity: 1;
   }
+
+ /* User Info Styles */
+.user-info {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-role {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
+
+  .ti-crown {
+    color: #FFD700;
+  }
+
+  .ti-book {
+    color: #5E97FF;
+  }
+
+  .ti-user {
+    color: #6c757d;
+  }
+
+  .username {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+  }
+
+  /* Answer Styles */
+  .answer-content {
+    margin-bottom: 1.5rem;
+  }
+
+  blockquote {
+    margin: 0;
+    padding: 1rem;
+    border-left: 0.25rem solid #dee2e6;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .vote-buttons {
+    display: flex;
+  }
+
+  .separator {
+    margin: 0 0.7rem;
+    font-size: 2rem;
+    color: #6c757d;
+  }
+
+.upvote-btn i {
+  color: #28a745;
+}
+
+.downvote-btn i {
+  color: #dc3545;
+}
+
+.upvote-btn,
+.downvote-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+
+}
+
+.upvote-btn:focus,
+.downvote-btn:focus {
+  outline: none;
+}
+
+.upvote-btn i,
+.downvote-btn i {
+  display: block;
+  font-size: 40px;
+}
+
+.upvote-btn:hover i,
+.downvote-btn:hover i {
+  transform: translateY(-3px);
+}

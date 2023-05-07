@@ -8,4 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Answer extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'question_id',
+        'body',
+        'url',
+        'up_votes',
+        'down_votes',
+        'accepted',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

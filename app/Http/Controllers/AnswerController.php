@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AnswerController extends Controller
 {
@@ -28,8 +31,37 @@ class AnswerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'picture' => 'image|max:2048',
+        ]);
+
+        try {
+            $answer = Answer::create([
+                'user_id' => $request->user_id,
+                'question_id' => $request->question_id,
+                'body' => $request->body,
+            ]);
+
+            if ($request->hasFile('picture')) {
+                $file = $request->file('picture');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('public/images/uploads/answers', $filename);
+                $url = Storage::url($path);
+                $answer->url = $url;
+                $answer->save();
+            }
+
+            return redirect()->route('questions.show', ['id' => $request->question_id])->with('success', 'Your answer has been submitted.');
+
+        } catch (\Exception $e) {
+            // Log the error message to the error log
+            Log::error('Error: ' . $e->getMessage());
+
+            // Display a friendly error message to the user
+            return redirect()->back()->with('error', 'An error occurred while submitting your answer. Please try again later.');
+        }
     }
+
 
     /**
      * Display the specified resource.
