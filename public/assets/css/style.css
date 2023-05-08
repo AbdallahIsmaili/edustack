@@ -1369,13 +1369,7 @@ a:hover {
     color: #6c757d;
   }
 
-.upvote-btn i {
-  color: #28a745;
-}
 
-.downvote-btn i {
-  color: #dc3545;
-}
 
 .upvote-btn,
 .downvote-btn {
@@ -1400,4 +1394,43 @@ a:hover {
 .upvote-btn:hover i,
 .downvote-btn:hover i {
   transform: translateY(-3px);
+}
+
+.upvote-btn-upvoted,
+.downvote-btn-downvoted {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+
+}
+
+.upvote-btn-upvoted i,
+.downvote-btn-downvoted i {
+  display: block;
+  font-size: 40px;
+}
+
+.upvote-btn-upvoted:hover i,
+.downvote-btn-downvoted:hover i {
+  transform: translateY(-3px);
+}
+
+.upvote-btn-upvoted {
+color: lightgreen;
+}
+.downvote-btn-downvoted {
+color: orangered;
+}
+
+.bg-green {
+    background-color: #dfffdf;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.correct{
+    color: green;
+    font-weight:700;
+    font-size: larger;
 }

@@ -162,6 +162,10 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'answers.update',
         'destroy' => 'answers.destroy'
     ])->middleware('auth')->names('answers');
+
+    Route::post('/answers/upvote', [AnswerController::class, 'upvote'])->name('answers.upvote');
+    Route::post('/answers/downvote', [AnswerController::class, 'downvote'])->name('answers.downvote');
+
 });
 
 // Route that shows a question's details.

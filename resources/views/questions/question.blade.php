@@ -16,6 +16,12 @@
 
 @endif
 
+@if (session('voted'))
+
+    <div style="background-color: blue;" id="toast" class="toast"></div>
+
+@endif
+
 
 <section class="section">
 	<div class="container">
@@ -120,43 +126,95 @@
             <br>
             <br>
 
-            @forelse ($answers as $answer)
-                <div class="answer-content">
-                    <div class="user-info">
-                    @if ($answer->user->role->name === 'Admin')
-                        <span class="user-role">
-                        <i class="ti-crown mr-2"></i>
-                        </span>
-                    @elseif ($answer->user->role->name === 'Teacher')
-                        <span class="user-role">
-                        <i class="ti-book mr-2"></i>
-                        </span>
-                    @else
-                        <span class="user-role">
-                        <i class="ti-crown mr-2"></i>
-                        </span>
-                    @endif
-                    <span class="username">{{ $answer->user->name }}</span>
-                    </div>
-                    <blockquote>
-                    <p>{!! $answer->body !!}</p>
-                    </blockquote>
-                    <div class="vote-buttons">
-                        <button class="upvote-btn"><i class='bx bxs-left-top-arrow-circle'></i></button>
-                        <span class="separator">{{ $answer->up_votes - $answer->down_votes }}</span>
-                        <button class="downvote-btn"><i class='bx bxs-right-down-arrow-circle' ></i></button>
-                    </div>
-                    <hr>
-                </div>
+            @php
+                $sortedAnswers = $answers->sortByDesc(function($answer) {
+                    return $answer->up_votes - $answer->down_votes;
+                });
+            @endphp
 
-                @empty
-                <div class="content">
+            @forelse ($sortedAnswers as $answer)
+                <div class="answer-content{{ ($answer->up_votes - $answer->down_votes >= 10) ? ' bg-green' : '' }}">
+                    <div class="user-info">
+                        @if ($answer->user->role->name === 'Admin')
+                            <span class="user-role">
+                                <i class="ti-crown mr-2"></i>
+                            </span>
+                        @elseif ($answer->user->role->name === 'Teacher')
+                            <span class="user-role">
+                                <<i class="ti-book mr-2"></i>
+                            </span>
+                        @else
+                            <span class="user-role">
+                                <i class="ti-crown mr-2"></i>
+                            </span>
+                        @endif
+                        <span class="username">{{ $answer->user->name }}{!! ($answer->up_votes - $answer->down_votes >= 10) ? '<span class="correct"> _Correct answer</span>' : '' !!}</span>
+                    </div>
                     <blockquote>
-                    <p>No answers yet.</p>
+                        <p>{!! $answer->body !!}</p>
                     </blockquote>
-                    <hr>
-                </div>
+
+                    <div class="vote-buttons">
+
+                        @if(Auth::check() && $answer->upvotes && $answer->upvotes->where('user_id', Auth::id())->count() > 0)
+                            <form method="POST" action="{{ route('answers.upvote') }}">
+                                @csrf
+                                <input type="hidden" name="answer_id" value="{{ $answer->id }}">
+                                <button class="upvote-btn-upvoted" type="submit" data-type="upvote">
+                                    <i class='bx bx-left-top-arrow-circle' ></i>
+                                </button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('answers.upvote') }}">
+                                @csrf
+                                <input type="hidden" name="answer_id" value="{{ $answer->id }}">
+                                <button class="upvote-btn" type="submit" data-type="upvote">
+                                    <i class='bx bx-left-top-arrow-circle' ></i>
+                                </button>
+                            </form>
+                        @endif
+
+
+                        <span class="separator">{{ $answer->up_votes - $answer->down_votes }}</span>
+
+
+                        @if(Auth::check() && $answer->downvotes && $answer->downvotes->where('user_id', Auth::id())->count() > 0)
+                            <form method="POST" action="{{ route('answers.downvote') }}">
+                                @csrf
+                                <input type="hidden" name="answer_id" value="{{ $answer->id }}">
+                                <button class="downvote-btn-downvoted" type="submit" data-type="downvote">
+                                    <i class='bx bx-right-down-arrow-circle' ></i>
+                                </button>
+                            </form>
+                        @else
+                            <form method="POST" action="{{ route('answers.downvote') }}">
+                                @csrf
+                                <input type="hidden" name="answer_id" value="{{ $answer->id }}">
+                                <button class="downvote-btn" type="submit" data-type="downvote">
+                                    <i class='bx bx-right-down-arrow-circle' ></i>
+                                </button>
+                            </form>
+                        @endif
+
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+                @empty
+                    <div class="content">
+                        <blockquote>
+                            <p>No answers yet.</p>
+                        </blockquote>
+                        <hr>
+                    </div>
                 @endforelse
+
+
+
+
+
 
 
 
@@ -227,6 +285,7 @@
 
 <script>
 
+
     $('#summernote').summernote({
       placeholder: 'Hello stand alone ui',
       tabsize: 2,
@@ -257,6 +316,9 @@
     @if (session('error'))
         showToast('{{ session('error') }}');
     @endif
+    @if (session('voted'))
+        showToast('{{ session('voted') }}');
+    @endif
 
         // Get all report modal elements
     var reportModals = document.querySelectorAll('.report-modal');
@@ -284,7 +346,9 @@
     });
 
 
-
 </script>
+
+
+
 
 @endsection

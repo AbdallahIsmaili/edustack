@@ -24,5 +24,15 @@ class Answer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function upvotes()
+    {
+        return $this->hasMany(Upvote::class);
+    }
+
+    public function downvotes()
+    {
+        return $this->hasMany(Downvote::class);
+    }
+
 
 }

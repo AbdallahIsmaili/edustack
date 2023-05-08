@@ -47,4 +47,22 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function hasUpvoted($answerId)
+    {
+        return $this->upvotes()->where('answer_id', $answerId)->exists();
+    }
+
+    /**
+     * Get the upvotes for the user.
+     */
+    public function upvotes()
+    {
+        return $this->hasMany(Upvote::class);
+    }
+
+    public function downvotes()
+    {
+        return $this->hasMany(Upvote::class);
+    }
+
 }
