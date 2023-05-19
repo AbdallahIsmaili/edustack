@@ -48,21 +48,9 @@ The website is a Q&A platform that covers all subjects and topics in various fie
 
 ### Architecture Techniques
 
-The Q&A website can be built using a variety of architecture techniques to ensure scalability, reliability, and maintainability. Some possible architecture techniques for the website include:
+1. **Database Design**: Choosing an appropriate database system (e.g., SQL or NoSQL) and designing the database schema to efficiently store and retrieve the data. Implementing indexes, caching mechanisms, and query optimizations can enhance performance.
 
-1. **Microservices Architecture**: Splitting the application into smaller, independent services that communicate with each other through APIs. This allows for easier scalability, deployment, and maintenance of different components of the system.
-
-2. **RESTful API**: Designing the backend as a RESTful API that follows standard HTTP methods and conventions. This allows for better separation of concerns and enables the frontend and mobile apps to consume the API.
-
-3. **Database Design**: Choosing an appropriate database system (e.g., SQL or NoSQL) and designing the database schema to efficiently store and retrieve the data. Implementing indexes, caching mechanisms, and query optimizations can enhance performance.
-
-4. **Caching**: Utilizing caching mechanisms, such as Redis or Memcached, to store frequently accessed data and reduce the load on the database. This can significantly improve the website's responsiveness and scalability.
-
-5. **Load Balancing**: Implementing load balancing techniques, such as using a load balancer or a reverse proxy, to distribute incoming requests across multiple servers. This ensures high availability and improves the website's capacity to handle increased traffic.
-
-6. **Scalable Infrastructure**: Setting up the website on cloud infrastructure providers like AWS, Google Cloud, or Azure. Using autoscaling groups and containerization technologies like Docker and Kubernetes can help dynamically scale the application based on demand.
-
-7. **Event-Driven Architecture**: Employing an event-driven approach to handle asynchronous processes and decouple different components of the system. This can be achieved using message queues or event streaming platforms like Apache Kafka.
+2. **Caching**: Utilizing caching mechanisms, such as Redis or Memcached, to store frequently accessed data and reduce the load on the database. This can significantly improve the website's responsiveness and scalability.
 
 ### Technical Constraints
 
@@ -75,8 +63,6 @@ Considerations for technical constraints might include:
 3. **Compatibility**: Designing the website to be compatible with various web browsers and devices, ensuring it is responsive and accessible on different screen sizes.
 
 4. **Maintainability**: Writing clean and modular code, following best practices and design patterns. Implementing automated testing, continuous integration, and deployment processes to facilitate maintenance and future enhancements.
-
-5. **Scalability**: Building the website to handle a growing user base and increased data volume without sacrificing performance. Utilizing horizontal scaling techniques and optimizing database queries can aid in scalability.
 
 ### Planning
 
