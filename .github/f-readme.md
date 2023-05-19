@@ -10,8 +10,8 @@ Le site est une plateforme de questions-réponses qui couvre tous les sujets et 
 
 #### Utilisateur anonyme
 
-- Rechercher des questions ou des sujets spécifiques
-- Parcourir les questions, réponses et commentaires
+- Rechercher des questions ou des sujets spécifiques.
+- Parcourir les questions.
 
 #### Utilisateur connecté
 
