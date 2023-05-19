@@ -64,8 +64,6 @@ The website is a Q&A platform that covers all subjects and topics in various fie
 
 ### Planning
 
-To effectively plan the development of the Q&A website, it is advisable to follow an iterative and incremental approach. Here's a high-level breakdown of the planning process:
-
 1. **Database Design**: Design the database schema, considering the entities, relationships, and performance requirements.
 
 2. **Wireframing and UI/UX Design**: Create wireframes and design the user interface to provide a seamless and intuitive user experience.
@@ -81,8 +79,6 @@ To effectively plan the development of the Q&A website, it is advisable to follo
 6. **Deployment**: Deploy the website to a staging environment for further testing and then to a production environment. Set up monitoring and logging mechanisms to track the website's performance and identify potential issues.
 
 ### Deliverables
-
-The deliverables for the Q&A website project would typically include:
 
 1. **Project Documentation**: Comprehensive documentation outlining the project requirements, architecture, design, and implementation details.
 
