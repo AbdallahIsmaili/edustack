@@ -10,8 +10,8 @@ The website is a Q&A platform that covers all subjects and topics in various fie
 
 #### Anonymous User
 
-- Search for questions or specific topics
-- Browse questions, answers, and comments
+- Search for questions or specific topics.
+- Browse questions.
 
 #### Logged-In User
 
